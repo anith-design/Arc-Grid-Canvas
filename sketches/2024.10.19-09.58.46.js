@@ -28,7 +28,7 @@ const params = {
 
 const gui = new dat.GUI();
 gui.add(params, 'numTilesX', 2, 24, 1).name('Grid size');
-gui.add(params, 'waveSpeed', 0.1, 5, 0.1).name('Wave speed');
+gui.add(params, 'waveSpeed', 0.1, 1.0, 0.1).name('Wave speed');
 gui.add(params, 'waveType', ['sine', 'noise']).name('Wave type');
 gui.addColor(params, 'bg').name('Background');
 gui.addColor(params, 'fg').name('Foreground');
