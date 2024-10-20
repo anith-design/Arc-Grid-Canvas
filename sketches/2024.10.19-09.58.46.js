@@ -1,6 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const colorPalettes = require('nice-color-palettes');
+const dat = require('dat.gui');
 
 const settings = {
   dimensions: [2048, 2048],
@@ -17,16 +18,28 @@ function radians(angle) {
   return angle * Math.PI / 180.0;
 }
 
+const params = {
+  numTilesX: 4,
+  waveSpeed: 0.2,
+  waveType: 'sine',
+  bg: '#FFC0CB',
+  fg: '#0000ff'
+}
+
+const gui = new dat.GUI();
+gui.add(params, 'numTilesX', 2, 24, 1).name('Grid size');
+gui.add(params, 'waveSpeed', 0.1, 5, 0.1).name('Wave speed');
+gui.add(params, 'waveType', ['sine', 'noise']).name('Wave type');
+gui.addColor(params, 'bg').name('Background');
+gui.addColor(params, 'fg').name('Foreground');
+
 const sketch = () => {
   const palette = random.pick(colorPalettes);
-  let numTilesX = 4;
-  let numTilesY = numTilesX;
-  
-  let bg = 'pink';
-  let fg = 'blue';
+  return ({ context, width, height, time }) => {
+    const numTilesX = params.numTilesX;
+    const numTilesY = numTilesX;
 
-  return ({ context, width, height, playhead }) => {
-    context.fillStyle = bg;
+    context.fillStyle = params.bg;
     context.fillRect(0, 0, width, height);
     
     const tileWidth = width / numTilesX;
@@ -37,12 +50,17 @@ const sketch = () => {
         let tilePosX = tileWidth * x;
         let tilePosY = tileHeight * y;
 
-        let wave = Math.sin(radians(playhead * 360 * 2 + x * 10 + y * 10));
-        //let wave = random.noise3D(x * 0.1, y * 0.1, playhead * 0.5);
+        let wave;
+        if (params.waveType === 'sine') {
+          wave = Math.sin(radians(time * 360 * params.waveSpeed + x * 10 + y * 10));
+        } else {
+          wave = random.noise3D(x * 0.1, y * 0.1, time * params.waveSpeed);
+        }
+        
         let mappedWave = scale(wave, -1, 1, 0, 5);
         let selectTile = Math.floor(mappedWave);
 
-        context.fillStyle = fg;
+        context.fillStyle = params.fg;
         context.save();
         context.translate(tilePosX, tilePosY);
 
