@@ -1,7 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const colorPalettes = require('nice-color-palettes');
-// const dat = require('dat.gui');
 const lilGui = require('lil-gui');
 
 const settings = {
@@ -34,7 +33,6 @@ const params = {
   }
 }
 
-//const gui = new dat.GUI();
 const gui = new lilGui.GUI();
 gui.add(params, 'numTilesX', 2, 12, 1).name('Grid size');
 gui.add(params, 'waveSpeed', 0.1, 1, 0.1).name('Wave speed');
