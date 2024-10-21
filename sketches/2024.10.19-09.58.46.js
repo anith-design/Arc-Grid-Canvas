@@ -38,7 +38,7 @@ const params = {
 const gui = new lilGui.GUI();
 gui.add(params, 'numTilesX', 2, 12, 1).name('Grid size');
 gui.add(params, 'waveSpeed', 0.1, 1, 0.1).name('Wave speed');
-gui.add(params, 'waveType', ['sine', 'cosine', 'tan', 'noise (simplex 3d)']).name('Wave function');
+gui.add(params, 'waveType', ['sine', 'noise']).name('Wave function');
 
 let colGui = gui.addFolder('Color settings');
 colGui.open();
@@ -65,10 +65,6 @@ const sketch = () => {
         let wave;
         if (params.waveType === 'sine') {
           wave = Math.sin(radians(time * 360 * params.waveSpeed + x * 10 + y * 10));
-        } else if (params.waveType === 'cosine') {
-          wave = Math.cos(radians(time * 360 * params.waveSpeed + x * 10 + y * 10));
-        } else if (params.waveType === 'tan') {
-          wave = Math.tan(radians(time * 360 * params.waveSpeed + x * 10 + y * 10));
         } else {
           wave = random.noise3D(x * 0.1, y * 0.1, time * params.waveSpeed);
         }
