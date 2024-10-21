@@ -12,7 +12,9 @@
   "dependencies": {
     "canvas-sketch": "^0.7.7",
     "canvas-sketch-util": "^1.10.0",
-    "dat.gui": "^0.7.9",
     "nice-color-palettes": "^4.0.0"
+  },
+  "devDependencies": {
+    "lil-gui": "^0.19.2"
   }
 }
